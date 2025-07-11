@@ -1,19 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final emailControllerProvider =
-    Provider.autoDispose<TextEditingController>((ref) {
-  final controller = TextEditingController();
-  ref.onDispose(controller.dispose);
-  return controller;
-});
+// final emailControllerProvider =
+//     Provider.autoDispose<TextEditingController>((ref) {
+//   final controller = TextEditingController();
+//   ref.onDispose(controller.dispose);
+//   return controller;
+// });
 
-final passwordControllerProvider =
-    Provider.autoDispose<TextEditingController>((ref) {
-  final controller = TextEditingController();
-  ref.onDispose(controller.dispose);
-  return controller;
-});
+// final passwordControllerProvider =
+//     Provider.autoDispose<TextEditingController>((ref) {
+//   final controller = TextEditingController();
+//   ref.onDispose(controller.dispose);
+//   return controller;
+// });
 
-//hiden and show password
-final hidenPassword = StateProvider<bool>((ref) => false);
+// //hiden and show password
+// final hidenPassword = StateProvider<bool>((ref) => false);
