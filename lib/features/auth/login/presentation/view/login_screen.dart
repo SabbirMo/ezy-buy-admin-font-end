@@ -2,6 +2,7 @@ import 'package:ezy_buy_admin_font_end/features/auth/login/presentation/provider
 import 'package:ezy_buy_admin_font_end/features/auth/login/presentation/widget/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
@@ -80,9 +81,37 @@ class LoginScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 24),
               InkWell(
-                onTap: () {
+                onTap: () async {
                   print("Email: ${emailController.text}");
                   print("Password: ${passwordController.text}");
+
+                  final email = ref.read(emailControllerProvider).text.trim();
+                  final password =
+                      ref.read(passwordControllerProvider).text.trim();
+
+                  if (email.isEmpty || password.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Please fill in all fields")));
+                    return;
+                  }
+
+                  try {
+                    final token = await ref.read(loginProvider({
+                      'email': email,
+                      'password': password,
+                    }).future);
+
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.setString('auth_token', token);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Login Successfully ")));
+                    print(token);
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(" Login failed: ${e.toString()}")),
+                    );
+                  }
                 },
                 child: Container(
                   width: double.infinity,
